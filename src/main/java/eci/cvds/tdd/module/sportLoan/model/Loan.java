@@ -18,7 +18,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Data
-@Document(collection = "loans")
+@Document(collection = "Loan")
 public class Loan {
     @Id
     private String id;

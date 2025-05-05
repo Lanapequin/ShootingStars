@@ -1,13 +1,10 @@
 package eci.cvds.tdd.module.sportLoan.model;
 
-import lombok.*;
+import eci.cvds.tdd.module.sportLoan.enums.EquipmentStatus;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 @Data
 @Document(collection = "Equipment")
 public class Equipment {
@@ -15,6 +12,6 @@ public class Equipment {
     private String id;
     private String name;
     private String description;
-    private String status;
-    private boolean avilable;// si esta en un prestamo
+    private EquipmentStatus status;
+    private boolean available;
 }

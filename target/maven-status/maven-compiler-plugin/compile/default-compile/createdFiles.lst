@@ -1,0 +1,15 @@
+eci\cvds\tdd\module\sportLoan\service\NotificationService.class
+eci\cvds\tdd\module\sportLoan\service\ServiceLoan.class
+eci\cvds\tdd\module\sportLoan\repository\LoanRepository.class
+eci\cvds\tdd\module\sportLoan\repository\EquipmentRepository.class
+eci\cvds\tdd\module\sportLoan\service\LoanService.class
+eci\cvds\tdd\module\sportLoan\SportLoanApplication.class
+eci\cvds\tdd\module\sportLoan\model\Loan.class
+eci\cvds\tdd\module\sportLoan\service\EquipmentService.class
+eci\cvds\tdd\module\sportLoan\service\ServiceEquipment.class
+eci\cvds\tdd\module\sportLoan\controller\LoanController.class
+eci\cvds\tdd\module\sportLoan\enums\EquipmentStatus.class
+eci\cvds\tdd\module\sportLoan\model\DTO\LoanRequest.class
+eci\cvds\tdd\module\sportLoan\model\DTO\EquipmentStatusUpdateRequest.class
+eci\cvds\tdd\module\sportLoan\model\DTO\ReturnDetails.class
+eci\cvds\tdd\module\sportLoan\model\Equipment.class

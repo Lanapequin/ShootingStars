@@ -5,5 +5,5 @@ public enum EquipmentStatus {
     IN_USE,
     DAMAGED,
     MAINTENANCE,
-    LOST
+    LOANED, LOST
 }

@@ -1,0 +1,15 @@
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\controller\LoanController.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\enums\EquipmentStatus.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\model\DTO\EquipmentStatusUpdateRequest.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\model\DTO\LoanRequest.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\model\DTO\ReturnDetails.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\model\Equipment.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\model\Loan.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\repository\EquipmentRepository.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\repository\LoanRepository.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\service\EquipmentService.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\service\LoanService.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\service\NotificationService.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\service\ServiceEquipment.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\service\ServiceLoan.java
+C:\Users\Difga\Downloads\sportLoan\src\main\java\eci\cvds\tdd\module\sportLoan\SportLoanApplication.java

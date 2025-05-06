@@ -23,15 +23,18 @@ public class ServiceLoan implements LoanService {
 
     @Override
     public Loan createLoan(LoanRequest request) {
-        Equipment equipment = equipmentRepository.findById(request.getEquipmentId())
-                .orElseThrow(() -> new RuntimeException("Equipment not found"));
-
-        if (equipment.getStatus() != EquipmentStatus.AVAILABLE) {
-            throw new RuntimeException("Equipment not available");
+        if (request.getLoanDateTime() == null || request.getReturnDueDateTime() == null) {
+            throw new IllegalArgumentException("Dates must not be null.");
+        }
+        if (request.getLoanDateTime().isAfter(request.getReturnDueDateTime())) {
+            throw new IllegalArgumentException("Return date must be after the loan date.");
         }
 
-        if (request.getLoanDateTime().isAfter(request.getReturnDueDateTime())){
-            throw new RuntimeException("Invalid Date");
+        Equipment equipment = equipmentRepository.findById(request.getEquipmentId())
+                .orElseThrow(() -> new IllegalArgumentException("Equipment not found."));
+
+        if (equipment.getStatus() != EquipmentStatus.AVAILABLE) {
+            throw new IllegalStateException("The equipment is not available for loan.");
         }
 
         equipment.setStatus(EquipmentStatus.LOANED);
@@ -43,11 +46,10 @@ public class ServiceLoan implements LoanService {
         loan.setLoanDateTime(request.getLoanDateTime());
         loan.setReturnDueDateTime(request.getReturnDueDateTime());
         loan.setLoanDurationHours(request.getLoanDurationHours());
-        loan.setInitialEquipmentStatus(equipment.getStatus());
+        loan.setInitialEquipmentStatus(EquipmentStatus.AVAILABLE);
 
         return loanRepository.save(loan);
     }
-
 
     @Override
     public void cancelLoan(String loanId) {
@@ -64,11 +66,17 @@ public class ServiceLoan implements LoanService {
 
     @Override
     public Loan returnLoan(ReturnDetails details) {
-        Loan loan = loanRepository.findById(details.getLoanId()).orElseThrow(() -> new RuntimeException("Loan not found"));
-        Equipment equipment = equipmentRepository.findById(loan.getEquipmentId()).orElseThrow(() -> new RuntimeException("Equipment not found"));
+        Loan loan = loanRepository.findById(details.getLoanId())
+                .orElseThrow(() -> new RuntimeException("Loan not found"));
 
-        Map<String, EquipmentStatus> returnStatus = new HashMap<>();
-        returnStatus.put(equipment.getId(), details.getReturnStatus());
+        if (loan.isReturned()) {
+            throw new IllegalStateException("The loan has already been returned.");
+        }
+
+        Equipment equipment = equipmentRepository.findById(loan.getEquipmentId())
+                .orElseThrow(() -> new RuntimeException("Equipment not found"));
+
+        loan.setReturned(true);
         loan.setReturnEquipmentStatus(details.getReturnStatus());
         loan.setObservations(details.getObservations());
         loan.setConfirmedReturnBy(details.getConfirmedReturnBy());

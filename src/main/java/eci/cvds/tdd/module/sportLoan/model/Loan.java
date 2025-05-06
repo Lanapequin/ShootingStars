@@ -28,4 +28,5 @@ public class Loan {
     private EquipmentStatus returnEquipmentStatus;
     private String observations;
     private String confirmedReturnBy;
+    private boolean returned;
 }

@@ -5,6 +5,9 @@ import eci.cvds.tdd.module.sportLoan.model.DTO.ReturnDetails;
 import eci.cvds.tdd.module.sportLoan.model.Loan;
 import eci.cvds.tdd.module.sportLoan.service.LoanService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -15,35 +18,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanController {
 
-    private final LoanService loanService;
+    @Autowired
+    private LoanService loanService;
 
-    @PostMapping
-    public Loan createLoan(@RequestBody LoanRequest request) {
-        return loanService.createLoan(request);
+    @PostMapping("/create")
+    public ResponseEntity<?> createLoan(@RequestBody LoanRequest request) {
+        try {
+            Loan loan = loanService.createLoan(request);
+            return new ResponseEntity<>(loan, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @DeleteMapping("/cancel/{id}")
+    public ResponseEntity<Void> cancelLoan(@PathVariable("id") String loanId) {
+        loanService.cancelLoan(loanId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/return")
-    public Loan returnLoan(@RequestBody ReturnDetails details) {
-        return loanService.returnLoan(details);
+    public ResponseEntity<Loan> returnLoan(@RequestBody ReturnDetails details) {
+        Loan loan = loanService.returnLoan(details);
+        return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{loanId}")
-    public void cancelLoan(@PathVariable String loanId) {
-        loanService.cancelLoan(loanId);
-    }
-
-    @GetMapping("/{loanId}")
-    public Loan getLoan(@PathVariable String loanId) {
-        return loanService.getLoanById(loanId);
+    @GetMapping("/{id}")
+    public ResponseEntity<Loan> getLoanById(@PathVariable("id") String loanId) {
+        Loan loan = loanService.getLoanById(loanId);
+        if (loan != null) {
+            return new ResponseEntity<>(loan, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/user/{userId}")
-    public List<Loan> listLoansByUser(@PathVariable String userId) {
-        return loanService.listLoansByUser(userId);
+    public ResponseEntity<List<Loan>> listLoansByUser(@PathVariable String userId) {
+        return new ResponseEntity<>(loanService.listLoansByUser(userId), HttpStatus.OK);
     }
 
     @GetMapping("/range")
-    public List<Loan> listLoansByDateRange(@RequestParam Date from, @RequestParam Date to) {
-        return loanService.listLoansByDateRange(from, to);
+    public ResponseEntity<List<Loan>> listLoansByDateRange(@RequestParam Date from, @RequestParam Date to) {
+        return new ResponseEntity<>(loanService.listLoansByDateRange(from, to), HttpStatus.OK);
     }
 }

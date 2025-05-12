@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,22 +26,16 @@ public class LoanController {
     public ResponseEntity<?> createLoan(@RequestBody LoanRequest request) {
         try {
             Loan loan = loanService.createLoan(request);
+            loanService.sendReturnReminder(loan.getId());
             return new ResponseEntity<>(loan, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-
-    @DeleteMapping("/cancel/{id}")
-    public ResponseEntity<Void> cancelLoan(@PathVariable("id") String loanId) {
-        loanService.cancelLoan(loanId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
     @PostMapping("/return")
     public ResponseEntity<Loan> returnLoan(@RequestBody ReturnDetails details) {
-        Loan loan = loanService.returnLoan(details);
+        Loan loan=loanService.returnLoan(details);
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 

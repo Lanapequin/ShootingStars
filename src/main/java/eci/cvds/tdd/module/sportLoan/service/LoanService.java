@@ -14,5 +14,6 @@ public interface LoanService {
     Loan getLoanById(String loanId);
     List<Loan> listLoansByUser(String userId);
     List<Loan> listLoansByDateRange(Date from, Date to);
+    void sendReturnOutReminder(String loanId);
     void sendReturnReminder(String loanId);
 }

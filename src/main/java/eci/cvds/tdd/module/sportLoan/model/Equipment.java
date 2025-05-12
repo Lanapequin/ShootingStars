@@ -13,5 +13,10 @@ public class Equipment {
     private String name;
     private String description;
     private EquipmentStatus status;
+    private String observations;
     private boolean available;
+
+    public boolean isAvailable() {
+        return available;
+    }
 }

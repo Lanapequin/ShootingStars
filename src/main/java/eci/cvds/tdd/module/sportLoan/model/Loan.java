@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Loan {
     @Id
     private String id;
-    private String userId;
+    private Long userId;
     private String equipmentId;
     private LocalDateTime loanDateTime;
     private LocalDateTime returnDueDateTime;
@@ -28,4 +28,5 @@ public class Loan {
     private EquipmentStatus returnEquipmentStatus;
     private String observations;
     private String confirmedReturnBy;
+    private boolean returned;
 }

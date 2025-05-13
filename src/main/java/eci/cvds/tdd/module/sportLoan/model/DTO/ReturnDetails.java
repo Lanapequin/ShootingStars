@@ -6,7 +6,10 @@ import lombok.Setter;
 
 import java.util.Map;
 
-
+/**
+ * Representación de los detalles de devolución de un préstamo de equipo deportivo.
+ * Contiene información sobre el estado del equipo al devolverlo y quién lo confirmó.
+ */
 @Data
 public class ReturnDetails {
     private String loanId;
@@ -14,5 +17,3 @@ public class ReturnDetails {
     private String confirmedReturnBy;
     private String observations;
 }
-
-

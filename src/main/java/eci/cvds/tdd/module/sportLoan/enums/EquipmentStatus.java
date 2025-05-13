@@ -1,9 +1,7 @@
 package eci.cvds.tdd.module.sportLoan.enums;
 
 public enum EquipmentStatus {
-    AVAILABLE,
-    IN_USE,
+    GOODSTATUS,
     DAMAGED,
-    MAINTENANCE,
-    LOANED, LOST
+    MAINTENANCE
 }

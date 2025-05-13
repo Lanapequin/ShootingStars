@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class LoanRequest {
-    private String userId;
+    private Long userId;
     private String equipmentId;
     private LocalDateTime loanDateTime;
     private LocalDateTime returnDueDateTime;

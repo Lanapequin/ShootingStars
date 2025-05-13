@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Representación de una solicitud de préstamo de equipo deportivo.
+ * Contiene la información necesaria para registrar un nuevo préstamo en el sistema.
+ */
 @Data
 public class LoanRequest {
     private Long userId;

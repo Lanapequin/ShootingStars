@@ -5,6 +5,10 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Representación de un equipo deportivo dentro del sistema de préstamos.
+ * Contiene información relevante como su estado, disponibilidad y descripción.
+ */
 @Data
 @Document(collection = "Equipment")
 public class Equipment {

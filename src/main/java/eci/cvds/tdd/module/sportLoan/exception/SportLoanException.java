@@ -23,6 +23,11 @@ public class SportLoanException extends RuntimeException {
       super(message);
     }
   }
+  public static class UserNotFoundException extends SportLoanException {
+    public UserNotFoundException(String message) {
+      super(message);
+    }
+  }
 
   public static class LoanAlreadyReturnedException extends SportLoanException {
     public LoanAlreadyReturnedException(String message) {

@@ -6,8 +6,10 @@ import eci.cvds.tdd.module.sportLoan.model.DTO.ReturnDetails;
 import eci.cvds.tdd.module.sportLoan.model.Equipment;
 import eci.cvds.tdd.module.sportLoan.model.Loan;
 import eci.cvds.tdd.module.sportLoan.enums.EquipmentStatus;
+import eci.cvds.tdd.module.sportLoan.model.User;
 import eci.cvds.tdd.module.sportLoan.repository.EquipmentRepository;
 import eci.cvds.tdd.module.sportLoan.repository.LoanRepository;
+import eci.cvds.tdd.module.sportLoan.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,9 @@ public class ServiceLoan implements LoanService {
 
     @Autowired
     private EquipmentRepository equipmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * Crea un nuevo préstamo de equipo.
@@ -72,6 +77,24 @@ public class ServiceLoan implements LoanService {
 
         return loanRepository.save(loan);
     }
+    @Override
+    public void addLoanToUser(Loan loan){
+        if(!userRepository.existsById(loan.getUserId())){
+            User user=new User();
+            user.setId(loan.getUserId());
+            List<Loan> loans=new ArrayList<>();
+            loans.add(loan);
+            user.setLoans(loans);
+            userRepository.save(user);
+        }
+        else{
+            User user=userRepository.findById(loan.getUserId());
+            user.getLoans().add(loan);
+            userRepository.save(user);
+        }
+    }
+
+
 
     /**
      * Cancela un préstamo existente y actualiza el estado del equipo.
@@ -109,6 +132,15 @@ public class ServiceLoan implements LoanService {
         Equipment equipment = equipmentRepository.findById(loan.getEquipmentId())
                 .orElseThrow(() -> new SportLoanException.EquipmentNotFoundException(
                         "Equipment with ID " + loan.getEquipmentId() + " not found."));
+
+        User user = userRepository.findById(loan.getUserId());
+        if (user == null) {
+            throw new SportLoanException.UserNotFoundException("User with ID " + loan.getUserId() + " not found.");
+        }
+        if (user.getLoans().contains(loan)) {
+            user.getLoans().remove(loan);
+            userRepository.save(user);
+        }
 
         loan.setReturned(true);
         loan.setReturnEquipmentStatus(details.getReturnStatus());

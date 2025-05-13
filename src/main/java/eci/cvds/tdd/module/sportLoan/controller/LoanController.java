@@ -26,6 +26,7 @@ public class LoanController {
     public ResponseEntity<?> createLoan(@RequestBody LoanRequest request) {
         try {
             Loan loan = loanService.createLoan(request);
+            loanService.addLoanToUser(loan);
             loanService.sendReturnReminder(loan.getId());
             return new ResponseEntity<>(loan, HttpStatus.CREATED);
         } catch (RuntimeException e) {

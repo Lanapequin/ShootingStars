@@ -11,6 +11,7 @@ eci\cvds\tdd\module\sportLoan\model\User.class
 eci\cvds\tdd\module\sportLoan\exception\SportLoanException$EquipmentNotFoundException.class
 eci\cvds\tdd\module\sportLoan\controller\EquipmentController.class
 eci\cvds\tdd\module\sportLoan\enums\Role.class
+eci\cvds\tdd\module\sportLoan\exception\SportLoanException$UserNotFoundException.class
 eci\cvds\tdd\module\sportLoan\model\Equipment.class
 eci\cvds\tdd\module\sportLoan\repository\LoanRepository.class
 eci\cvds\tdd\module\sportLoan\repository\EquipmentRepository.class

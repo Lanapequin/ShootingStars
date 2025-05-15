@@ -10,4 +10,8 @@ class SportLoanApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void mainMethodRunsWithoutExceptions() {
+		SportLoanApplication.main(new String[]{});
+	}
 }

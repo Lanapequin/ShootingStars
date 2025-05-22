@@ -43,6 +43,7 @@ public class ServiceLoan implements LoanService {
      */
     @Override
     public Loan createLoan(LoanRequest request) {
+        // Validación de fechas nulas o en orden incorrecto
         if (request.getLoanDateTime() == null || request.getReturnDueDateTime() == null) {
             throw new IllegalArgumentException("Dates must not be null.");
         }
@@ -50,10 +51,12 @@ public class ServiceLoan implements LoanService {
             throw new IllegalArgumentException("Return date must be after the loan date.");
         }
 
+        // Validar que el equipo exista
         Equipment equipment = equipmentRepository.findById(request.getEquipmentId())
                 .orElseThrow(() -> new SportLoanException.EquipmentNotFoundException(
                         "Equipment with ID " + request.getEquipmentId() + " not found."));
 
+        // Validar que el equipo esté disponible y en buen estado
         if (!equipment.isAvailable()) {
             throw new SportLoanException.EquipmentNotAvailableException("The equipment is not available for loan.");
         }
@@ -64,6 +67,7 @@ public class ServiceLoan implements LoanService {
                     "The equipment is currently " + equipment.getStatus().name().toLowerCase() + ".");
         }
 
+        // Actualizar estado del equipo y guardar el préstamo
         equipment.setAvailable(false);
         equipmentRepository.save(equipment);
 
@@ -77,6 +81,7 @@ public class ServiceLoan implements LoanService {
 
         return loanRepository.save(loan);
     }
+
     @Override
     public void addLoanToUser(Loan loan){
         if(!userRepository.existsById(loan.getUserId())){

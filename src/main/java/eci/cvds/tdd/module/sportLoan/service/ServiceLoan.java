@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+
+import static eci.cvds.tdd.module.sportLoan.util.DateValidator.esHorarioPermitido;
 
 /**
  * Servicio para la gestión de préstamos de equipos deportivos.
@@ -50,6 +54,11 @@ public class ServiceLoan implements LoanService {
         if (request.getLoanDateTime().isAfter(request.getReturnDueDateTime())) {
             throw new IllegalArgumentException("Return date must be after the loan date.");
         }
+
+        if (!esHorarioPermitido(request.getLoanDateTime()) || !esHorarioPermitido(request.getReturnDueDateTime())) {
+            throw new IllegalArgumentException("Loan and return times must be within allowed hours: Mon–Fri 7am–4pm, Sat 8am–12pm.");
+        }
+
 
         // Validar que el equipo exista
         Equipment equipment = equipmentRepository.findById(request.getEquipmentId())

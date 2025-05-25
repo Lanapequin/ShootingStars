@@ -98,4 +98,8 @@ public class ServiceEquipment implements EquipmentService {
         return equipmentRepository.findById(equipmentId)
                 .orElseThrow(() -> new RuntimeException("Equipment not found"));
     }
+    @Override
+    public List<Equipment>getBadAndMaintenance(){
+        return equipmentRepository.findBadAndMaintenance();
+    }
 }

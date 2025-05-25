@@ -10,6 +10,7 @@ import eci.cvds.tdd.module.sportLoan.model.User;
 import eci.cvds.tdd.module.sportLoan.repository.EquipmentRepository;
 import eci.cvds.tdd.module.sportLoan.repository.LoanRepository;
 import eci.cvds.tdd.module.sportLoan.repository.UserRepository;
+import eci.cvds.tdd.module.sportLoan.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ public class ServiceLoan implements LoanService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * Crea un nuevo préstamo de equipo.
@@ -102,7 +106,7 @@ public class ServiceLoan implements LoanService {
             userRepository.save(user);
         }
         else{
-            User user=userRepository.findById(loan.getUserId());
+            User user=userRepository.findUserById(loan.getUserId());
             user.getLoans().add(loan);
             userRepository.save(user);
         }
@@ -147,7 +151,7 @@ public class ServiceLoan implements LoanService {
                 .orElseThrow(() -> new SportLoanException.EquipmentNotFoundException(
                         "Equipment with ID " + loan.getEquipmentId() + " not found."));
 
-        User user = userRepository.findById(loan.getUserId());
+        User user = userRepository.findUserById(loan.getUserId());
         if (user == null) {
             throw new SportLoanException.UserNotFoundException("User with ID " + loan.getUserId() + " not found.");
         }
@@ -260,4 +264,5 @@ public class ServiceLoan implements LoanService {
                     ": Debe devolver el equipo.");
         }
     }
+
 }

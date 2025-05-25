@@ -24,4 +24,14 @@ public interface EquipmentRepository extends MongoRepository<Equipment, String> 
      * @return Lista de equipos que cumplen con los criterios de estado y disponibilidad.
      */
     List<Equipment> findByStatusAndAvailable(EquipmentStatus status, boolean available);
+    default List<Equipment> findBadAndMaintenance(){
+        List<Equipment> equipos = findAll();
+        List<Equipment> badandmaintenance= new java.util.ArrayList<>();
+        for (Equipment e: equipos){
+            if(e.getStatus().equals(EquipmentStatus.DAMAGED) || e.getStatus().equals(EquipmentStatus.MAINTENANCE)){
+                badandmaintenance.add(e);
+            }
+        }
+        return badandmaintenance;
+    }
 }

@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Loan")
 public class Loan {
     private String id;
-    private Long userId;
+    private String userId;
     private String equipmentId;
     private LocalDateTime loanDateTime;
     private LocalDateTime returnDueDateTime;

@@ -10,12 +10,17 @@ import eci.cvds.tdd.module.sportLoan.model.User;
 import eci.cvds.tdd.module.sportLoan.repository.EquipmentRepository;
 import eci.cvds.tdd.module.sportLoan.repository.LoanRepository;
 import eci.cvds.tdd.module.sportLoan.repository.UserRepository;
+import eci.cvds.tdd.module.sportLoan.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+
+import static eci.cvds.tdd.module.sportLoan.util.DateValidator.esHorarioPermitido;
 
 /**
  * Servicio para la gestión de préstamos de equipos deportivos.
@@ -33,6 +38,9 @@ public class ServiceLoan implements LoanService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /**
      * Crea un nuevo préstamo de equipo.
      *
@@ -43,6 +51,7 @@ public class ServiceLoan implements LoanService {
      */
     @Override
     public Loan createLoan(LoanRequest request) {
+        // Validación de fechas nulas o en orden incorrecto
         if (request.getLoanDateTime() == null || request.getReturnDueDateTime() == null) {
             throw new IllegalArgumentException("Dates must not be null.");
         }
@@ -50,10 +59,17 @@ public class ServiceLoan implements LoanService {
             throw new IllegalArgumentException("Return date must be after the loan date.");
         }
 
+        if (!esHorarioPermitido(request.getLoanDateTime()) || !esHorarioPermitido(request.getReturnDueDateTime())) {
+            throw new IllegalArgumentException("Loan and return times must be within allowed hours: Mon–Fri 7am–4pm, Sat 8am–12pm.");
+        }
+
+
+        // Validar que el equipo exista
         Equipment equipment = equipmentRepository.findById(request.getEquipmentId())
                 .orElseThrow(() -> new SportLoanException.EquipmentNotFoundException(
                         "Equipment with ID " + request.getEquipmentId() + " not found."));
 
+        // Validar que el equipo esté disponible y en buen estado
         if (!equipment.isAvailable()) {
             throw new SportLoanException.EquipmentNotAvailableException("The equipment is not available for loan.");
         }
@@ -64,6 +80,7 @@ public class ServiceLoan implements LoanService {
                     "The equipment is currently " + equipment.getStatus().name().toLowerCase() + ".");
         }
 
+        // Actualizar estado del equipo y guardar el préstamo
         equipment.setAvailable(false);
         equipmentRepository.save(equipment);
 
@@ -77,6 +94,7 @@ public class ServiceLoan implements LoanService {
 
         return loanRepository.save(loan);
     }
+
     @Override
     public void addLoanToUser(Loan loan){
         if(!userRepository.existsById(loan.getUserId())){
@@ -88,7 +106,7 @@ public class ServiceLoan implements LoanService {
             userRepository.save(user);
         }
         else{
-            User user=userRepository.findById(loan.getUserId());
+            User user=userRepository.findUserById(loan.getUserId());
             user.getLoans().add(loan);
             userRepository.save(user);
         }
@@ -133,7 +151,7 @@ public class ServiceLoan implements LoanService {
                 .orElseThrow(() -> new SportLoanException.EquipmentNotFoundException(
                         "Equipment with ID " + loan.getEquipmentId() + " not found."));
 
-        User user = userRepository.findById(loan.getUserId());
+        User user = userRepository.findUserById(loan.getUserId());
         if (user == null) {
             throw new SportLoanException.UserNotFoundException("User with ID " + loan.getUserId() + " not found.");
         }
@@ -246,4 +264,5 @@ public class ServiceLoan implements LoanService {
                     ": Debe devolver el equipo.");
         }
     }
+
 }

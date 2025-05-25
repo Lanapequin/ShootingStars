@@ -13,4 +13,5 @@ public interface EquipmentService {
     void disableEquipment(String equipmentId);
     void enableEquipment(String equipmentId);
     Equipment getEquipmentById(String equipmentId);
+    List<Equipment>getBadAndMaintenance();
 }

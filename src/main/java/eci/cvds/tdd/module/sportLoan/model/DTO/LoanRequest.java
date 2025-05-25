@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class LoanRequest {
-    private Long userId;
+    private String userId;
     private String equipmentId;
     private LocalDateTime loanDateTime;
     private LocalDateTime returnDueDateTime;

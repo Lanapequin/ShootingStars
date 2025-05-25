@@ -86,4 +86,10 @@ public class EquipmentController {
     public ResponseEntity<Equipment> getEquipmentById(@PathVariable String id) {
         return ResponseEntity.ok(equipmentService.getEquipmentById(id));
     }
+
+    @GetMapping("/getBadEquipment")
+    public ResponseEntity<List<Equipment>> getEquipmentBadAndMaintenance() {
+        return ResponseEntity.ok(equipmentService.getBadAndMaintenance());
+    }
+
 }

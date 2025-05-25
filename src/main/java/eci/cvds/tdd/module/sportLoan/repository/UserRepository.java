@@ -4,6 +4,8 @@ import eci.cvds.tdd.module.sportLoan.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Repositorio de usuarios del sistema de préstamos deportivos.
  * Proporciona métodos para la gestión y consulta de usuarios almacenados en la base de datos MongoDB.
@@ -25,5 +27,10 @@ public interface UserRepository extends MongoRepository<User, String>{
      * @param id ID del usuario a consultar.
      * @return Usuario encontrado, o `null` si no existe.
      */
-    public User findById(Long id);
+    default User findUserById(String id) {
+        return findById(id).orElse(null);
+    }
+
+
+
 }

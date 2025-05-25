@@ -1,9 +1,1 @@
-eci\cvds\tdd\module\sportLoan\controller\EquipmentControllerTest.class
-eci\cvds\tdd\module\sportLoan\exception\SportLoanExceptionTest.class
-eci\cvds\tdd\module\sportLoan\repository\LoanRepositoryTest.class
-eci\cvds\tdd\module\sportLoan\service\ServiceEquipmentTest.class
-eci\cvds\tdd\module\sportLoan\service\ServiceLoanTest.class
-eci\cvds\tdd\module\sportLoan\model\EquipmentStatusTest.class
-eci\cvds\tdd\module\sportLoan\enums\RoleTest.class
 eci\cvds\tdd\module\sportLoan\SportLoanApplicationTests.class
-eci\cvds\tdd\module\sportLoan\controller\LoanControllerTest.class

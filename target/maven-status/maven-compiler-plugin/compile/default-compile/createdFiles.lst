@@ -1,6 +1,7 @@
 eci\cvds\tdd\module\sportLoan\service\ServiceLoan.class
 eci\cvds\tdd\module\sportLoan\config\CorsConfig.class
 eci\cvds\tdd\module\sportLoan\service\LoanService.class
+eci\cvds\tdd\module\sportLoan\config\SecurityConfig.class
 eci\cvds\tdd\module\sportLoan\exception\SportLoanException$LoanNotFoundException.class
 eci\cvds\tdd\module\sportLoan\model\Loan.class
 eci\cvds\tdd\module\sportLoan\service\EquipmentService.class
@@ -13,9 +14,12 @@ eci\cvds\tdd\module\sportLoan\controller\EquipmentController.class
 eci\cvds\tdd\module\sportLoan\enums\Role.class
 eci\cvds\tdd\module\sportLoan\exception\SportLoanException$UserNotFoundException.class
 eci\cvds\tdd\module\sportLoan\model\Equipment.class
+eci\cvds\tdd\module\sportLoan\util\JwtUtil.class
 eci\cvds\tdd\module\sportLoan\repository\LoanRepository.class
+eci\cvds\tdd\module\sportLoan\config\JwtRequestFilter.class
 eci\cvds\tdd\module\sportLoan\repository\EquipmentRepository.class
 eci\cvds\tdd\module\sportLoan\SportLoanApplication.class
+eci\cvds\tdd\module\sportLoan\util\DateValidator.class
 eci\cvds\tdd\module\sportLoan\exception\SportLoanException$LoanAlreadyReturnedException.class
 eci\cvds\tdd\module\sportLoan\exception\SportLoanException$EquipmentNotAvailableException.class
 eci\cvds\tdd\module\sportLoan\model\DTO\LoanRequest.class

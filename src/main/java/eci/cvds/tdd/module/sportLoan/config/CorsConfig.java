@@ -19,7 +19,8 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Permite todas las rutas
-                .allowedOrigins("http://localhost:3000") // URL de tu frontend.
+                .allowedOrigins("https://frontend-modulo4.vercel.app",
+                        "https://frontend-modulo4-rfw3tcgjl-santiagoamaya21s-projects.vercel.app") // URL de tu frontend.
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos o end points permitidos
                 .allowedHeaders("*"); // Permitir todos los encabezados
     }

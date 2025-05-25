@@ -266,6 +266,24 @@ public class ServiceLoan implements LoanService {
             System.out.println("Notificación al usuario " + loan.getUserId() +
                     ": Debe devolver el equipo.");
         }
+    } 
+
+    @Override
+    public List<String> getNotificationsForUser(String userId) {
+        List<String> result = new ArrayList<>();
+        List<Loan> activeLoans = loanRepository.findAllByUserIdAndReturnedFalse(userId);
+        LocalDateTime now = LocalDateTime.now();
+        
+        for (Loan loan : activeLoans) {
+            LocalDateTime due = loan.getReturnDueDateTime();
+            if (!now.isAfter(due) && now.plusMinutes(5).isAfter(due)) {
+                result.add("Debe devolver el equipo " + loan.getEquipmentId() + " en " + due + ".");
+            } else if (now.isAfter(due)) {
+                result.add("Debe devolver el equipo " + loan.getEquipmentId() + ". Ya está vencido.");
+            }
+        }
+        return result;
     }
+
 
 }

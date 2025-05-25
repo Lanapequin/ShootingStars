@@ -95,7 +95,7 @@ public class LoanController {
         return new ResponseEntity<>(loanService.listLoansByDateRange(from, to), HttpStatus.OK);
     }
 
-     @GetMapping("/{userId}")
+     @GetMapping("/notifications/{userId}")
     public ResponseEntity<List<String>> getUserNotifications(@PathVariable String userId,@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.getNotificationsForUser(userId), HttpStatus.OK);
     }

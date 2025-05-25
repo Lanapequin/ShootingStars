@@ -27,7 +27,7 @@ public class EquipmentController {
      * @return ResponseEntity con el equipo guardado.
      */
     @PostMapping
-    public ResponseEntity<Equipment> addEquipment(@RequestBody Equipment equipment) {
+    public ResponseEntity<Equipment> addEquipment(@RequestBody Equipment equipment,@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(equipmentService.addEquipment(equipment));
     }
 
@@ -38,7 +38,7 @@ public class EquipmentController {
      * @return ResponseEntity con el equipo actualizado.
      */
     @PutMapping("/status")
-    public ResponseEntity<Equipment> updateStatus(@RequestBody EquipmentStatusUpdateRequest request) {
+    public ResponseEntity<Equipment> updateStatus(@RequestBody EquipmentStatusUpdateRequest request,@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(equipmentService.updateEquipmentStatus(request));
     }
 
@@ -48,7 +48,7 @@ public class EquipmentController {
      * @return ResponseEntity con la lista de equipos disponibles.
      */
     @GetMapping("/available")
-    public ResponseEntity<List<Equipment>> getAvailableEquipment() {
+    public ResponseEntity<List<Equipment>> getAvailableEquipment(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(equipmentService.getAvailableEquipment());
     }
 
@@ -59,7 +59,7 @@ public class EquipmentController {
      * @return ResponseEntity vacío con estado HTTP OK.
      */
     @PutMapping("/disable/{id}")
-    public ResponseEntity<Void> disableEquipment(@PathVariable String id) {
+    public ResponseEntity<Void> disableEquipment(@PathVariable String id,@RequestHeader("Authorization") String token) {
         equipmentService.disableEquipment(id);
         return ResponseEntity.ok().build();
     }
@@ -71,7 +71,7 @@ public class EquipmentController {
      * @return ResponseEntity vacío con estado HTTP OK.
      */
     @PutMapping("/enable/{id}")
-    public ResponseEntity<Void> enableEquipment(@PathVariable String id) {
+    public ResponseEntity<Void> enableEquipment(@PathVariable String id,@RequestHeader("Authorization") String token) {
         equipmentService.enableEquipment(id);
         return ResponseEntity.ok().build();
     }
@@ -83,12 +83,12 @@ public class EquipmentController {
      * @return ResponseEntity con el equipo encontrado.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Equipment> getEquipmentById(@PathVariable String id) {
+    public ResponseEntity<Equipment> getEquipmentById(@PathVariable String id,@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(equipmentService.getEquipmentById(id));
     }
 
     @GetMapping("/getBadEquipment")
-    public ResponseEntity<List<Equipment>> getEquipmentBadAndMaintenance() {
+    public ResponseEntity<List<Equipment>> getEquipmentBadAndMaintenance(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(equipmentService.getBadAndMaintenance());
     }
 

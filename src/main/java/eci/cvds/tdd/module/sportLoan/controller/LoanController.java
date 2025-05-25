@@ -34,7 +34,7 @@ public class LoanController {
      * @return ResponseEntity con el préstamo creado o un mensaje de error.
      */
     @PostMapping("/create")
-    public ResponseEntity<?> createLoan(@RequestBody LoanRequest request) {
+    public ResponseEntity<?> createLoan(@RequestBody LoanRequest request,@RequestHeader("Authorization") String token) {
         try {
             Loan loan = loanService.createLoan(request);
             loanService.addLoanToUser(loan);
@@ -52,7 +52,7 @@ public class LoanController {
      * @return ResponseEntity con el préstamo actualizado.
      */
     @PostMapping("/return")
-    public ResponseEntity<Loan> returnLoan(@RequestBody ReturnDetails details) {
+    public ResponseEntity<Loan> returnLoan(@RequestBody ReturnDetails details,@RequestHeader("Authorization") String token) {
         Loan loan=loanService.returnLoan(details);
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
@@ -64,7 +64,7 @@ public class LoanController {
      * @return ResponseEntity con el préstamo encontrado o un estado HTTP 404 si no existe.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Loan> getLoanById(@PathVariable("id") String loanId) {
+    public ResponseEntity<Loan> getLoanById(@PathVariable("id") String loanId,@RequestHeader("Authorization") String token) {
         Loan loan = loanService.getLoanById(loanId);
         if (loan != null) {
             return new ResponseEntity<>(loan, HttpStatus.OK);
@@ -79,7 +79,7 @@ public class LoanController {
      * @return ResponseEntity con la lista de préstamos del usuario.
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Loan>> listLoansByUser(@PathVariable String userId) {
+    public ResponseEntity<List<Loan>> listLoansByUser(@PathVariable String userId,@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.listLoansByUser(userId), HttpStatus.OK);
     }
 
@@ -91,7 +91,7 @@ public class LoanController {
      * @return ResponseEntity con la lista de préstamos dentro del rango.
      */
     @GetMapping("/range")
-    public ResponseEntity<List<Loan>> listLoansByDateRange(@RequestParam Date from, @RequestParam Date to) {
+    public ResponseEntity<List<Loan>> listLoansByDateRange(@RequestParam Date from, @RequestParam Date to,@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.listLoansByDateRange(from, to), HttpStatus.OK);
     }
 }

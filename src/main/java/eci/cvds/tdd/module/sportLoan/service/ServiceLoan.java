@@ -63,6 +63,9 @@ public class ServiceLoan implements LoanService {
             throw new IllegalArgumentException("Loan and return times must be within allowed hours: Mon–Fri 7am–4pm, Sat 8am–12pm.");
         }
 
+        if(request.getUserId().isEmpty()||request.getUserId()==null){
+            throw new IllegalArgumentException("User ID must not be null.");
+        }
 
         // Validar que el equipo exista
         Equipment equipment = equipmentRepository.findById(request.getEquipmentId())

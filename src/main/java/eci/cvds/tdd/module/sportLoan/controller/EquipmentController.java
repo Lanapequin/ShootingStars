@@ -92,4 +92,5 @@ public class EquipmentController {
         return ResponseEntity.ok(equipmentService.getBadAndMaintenance());
     }
 
+
 }

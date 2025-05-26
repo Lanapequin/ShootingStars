@@ -18,4 +18,5 @@ public interface LoanService {
     void sendReturnReminder(String loanId);
     void addLoanToUser(Loan loan);
     List<String> getNotificationsForUser(String userId);
+    List<Loan>getActiveLoans();
 }

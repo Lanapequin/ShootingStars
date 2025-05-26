@@ -116,7 +116,6 @@ class LoanControllerTest {
         assertEquals(loans, response.getBody());
     }
 
-
     @Test
     void listLoansByDateRange_ActiveLoans_ReturnsList() {
         List<Loan> loans = List.of(new Loan());

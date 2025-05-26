@@ -55,6 +55,9 @@ public class ServiceLoan implements LoanService {
         if (request.getLoanDateTime() == null || request.getReturnDueDateTime() == null) {
             throw new IllegalArgumentException("Dates must not be null.");
         }
+        if (request.getLoanDateTime().isBefore(LocalDateTime.now())||request.getReturnDueDateTime().isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("Dates must be after the current date.");
+        }
         if (request.getLoanDateTime().isAfter(request.getReturnDueDateTime())) {
             throw new IllegalArgumentException("Return date must be after the loan date.");
         }

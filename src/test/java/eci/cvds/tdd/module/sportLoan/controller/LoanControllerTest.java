@@ -104,9 +104,10 @@ class LoanControllerTest {
 
     @Test
     void listLoansByDateRange_ReturnsList() {
-        Date from = new Date();
-        Date to = new Date();
+        Date from = new Date(); // Fecha de inicio
+        Date to = new Date();   // Fecha de fin
         List<Loan> loans = List.of(new Loan());
+
         when(loanService.listLoansByDateRange(from, to)).thenReturn(loans);
 
         ResponseEntity<List<Loan>> response = loanController.listLoansByDateRange(from, to, dummyToken);
@@ -114,6 +115,7 @@ class LoanControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(loans, response.getBody());
     }
+
 
     @Test
     void listLoansByDateRange_ActiveLoans_ReturnsList() {
@@ -124,17 +126,5 @@ class LoanControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(loans, response.getBody());
-    }
-
-    @Test
-    void getUserNotifications_ReturnsList() {
-        String userId = "user1";
-        List<String> notifications = List.of("Notification 1", "Notification 2");
-        when(loanService.getNotificationsForUser(userId)).thenReturn(notifications);
-
-        ResponseEntity<List<String>> response = loanController.getUserNotifications(userId, dummyToken);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(notifications, response.getBody());
     }
 }

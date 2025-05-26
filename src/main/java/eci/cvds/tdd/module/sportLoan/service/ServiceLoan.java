@@ -266,8 +266,12 @@ public class ServiceLoan implements LoanService {
             System.out.println("Notificación al usuario " + loan.getUserId() +
                     ": Debe devolver el equipo.");
         }
-    } 
-
+    }
+    /**
+     * Envía una notificación si el préstamo ya se ha vencido o si esta por vencer.
+     *
+     * @param userId ID del usuario.
+     */
     @Override
     public List<String> getNotificationsForUser(String userId) {
         List<String> result = new ArrayList<>();
@@ -283,6 +287,12 @@ public class ServiceLoan implements LoanService {
             }
         }
         return result;
+    }
+    /**
+     * Retorna la lista con los prestamos activos
+     */
+    public List<Loan>getActiveLoans(){
+        return loanRepository.findAllByReturnedFalse();
     }
 
 

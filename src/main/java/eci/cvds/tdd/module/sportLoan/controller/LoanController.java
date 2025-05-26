@@ -94,6 +94,14 @@ public class LoanController {
     public ResponseEntity<List<Loan>> listLoansByDateRange(@RequestParam Date from, @RequestParam Date to,@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.listLoansByDateRange(from, to), HttpStatus.OK);
     }
+    /**
+     * Lista los prestamos que se encuentran activos
+     * @return ResponseEntity con la lista de préstamos activos.
+     */
+    @GetMapping("/ActiveLoans")
+    public ResponseEntity<List<Loan>> listLoansByDateRange(@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<>(loanService.getActiveLoans(), HttpStatus.OK);
+    }
 
      @GetMapping("/notifications/{userId}")
     public ResponseEntity<List<String>> getUserNotifications(@PathVariable String userId,@RequestHeader("Authorization") String token) {

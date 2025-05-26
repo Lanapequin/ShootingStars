@@ -17,5 +17,4 @@ public class User {
     private List<Loan> loans;
     private Role role;
 
-
 }

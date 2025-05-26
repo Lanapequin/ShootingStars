@@ -102,8 +102,16 @@ public class LoanController {
     public ResponseEntity<List<Loan>> listActiveLoans(@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.getActiveLoans(), HttpStatus.OK);
     }
+    /**
+     * Lista los prestamos que se encuentran activos
+     * @return ResponseEntity con la lista de préstamos activos.
+     */
+    @GetMapping("/loans")
+    public ResponseEntity<List<Loan>> allLoans(@RequestHeader("Authorization") String token) {
+        return new ResponseEntity<>(loanService.getLoans(), HttpStatus.OK);
+    }
 
-     @GetMapping("/notifications/{userId}")
+    @GetMapping("/notifications/{userId}")
     public ResponseEntity<List<String>> getUserNotifications(@PathVariable String userId,@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.getNotificationsForUser(userId), HttpStatus.OK);
     }

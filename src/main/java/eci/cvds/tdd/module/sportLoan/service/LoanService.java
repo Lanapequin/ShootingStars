@@ -19,4 +19,5 @@ public interface LoanService {
     void addLoanToUser(Loan loan);
     List<String> getNotificationsForUser(String userId);
     List<Loan>getActiveLoans();
+    List<Loan>getLoans();
 }

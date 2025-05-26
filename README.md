@@ -43,7 +43,7 @@ Una vez que la aplicación ha sido construida y probada correctamente, el siguie
 
 ## Diseño en Astah
 
-![imagenes](images/1.png)
+![imagenes](images/astah.png)
 
 ## App Service creado en azure
 

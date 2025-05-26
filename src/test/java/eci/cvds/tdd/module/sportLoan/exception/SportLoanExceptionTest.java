@@ -1,55 +1,52 @@
-//package eci.cvds.tdd.module.sportLoan.exception;
-//
-//import org.junit.jupiter.api.Test;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//class SportLoanExceptionTest {
-//
-//    @Test
-//    void testBaseExceptionMessage() {
-//        String message = "General error";
-//        SportLoanException exception = new SportLoanException(message);
-//        assertEquals(message, exception.getMessage());
-//    }
-//
-//    @Test
-//    void testEquipmentNotAvailableException() {
-//        String message = "Equipment not available";
-//        SportLoanException.EquipmentNotAvailableException exception =
-//                new SportLoanException.EquipmentNotAvailableException(message);
-//        assertEquals(message, exception.getMessage());
-//    }
-//
-//    @Test
-//    void testEquipmentNotFoundException() {
-//        String message = "Equipment not found";
-//        SportLoanException.EquipmentNotFoundException exception =
-//                new SportLoanException.EquipmentNotFoundException(message);
-//        assertEquals(message, exception.getMessage());
-//    }
-//
-//    @Test
-//    void testLoanNotFoundException() {
-//        String message = "Loan not found";
-//        SportLoanException.LoanNotFoundException exception =
-//                new SportLoanException.LoanNotFoundException(message);
-//        assertEquals(message, exception.getMessage());
-//    }
-//
-//    @Test
-//    void testUserNotFoundException() {
-//        String message = "User not found";
-//        SportLoanException.UserNotFoundException exception =
-//                new SportLoanException.UserNotFoundException(message);
-//        assertEquals(message, exception.getMessage());
-//    }
-//
-//    @Test
-//    void testLoanAlreadyReturnedException() {
-//        String message = "Loan already returned";
-//        SportLoanException.LoanAlreadyReturnedException exception =
-//                new SportLoanException.LoanAlreadyReturnedException(message);
-//        assertEquals(message, exception.getMessage());
-//    }
-//}
+package eci.cvds.tdd.module.sportLoan.exception;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class SportLoanExceptionTest {
+
+    @Test
+    public void testEquipmentNotAvailableException() {
+        String message = "Equipo no disponible";
+        SportLoanException ex = new SportLoanException.EquipmentNotAvailableException(message);
+
+        assertTrue(ex instanceof SportLoanException);
+        assertEquals(message, ex.getMessage());
+    }
+
+    @Test
+    public void testEquipmentNotFoundException() {
+        String message = "Equipo no encontrado";
+        SportLoanException ex = new SportLoanException.EquipmentNotFoundException(message);
+
+        assertTrue(ex instanceof SportLoanException);
+        assertEquals(message, ex.getMessage());
+    }
+
+    @Test
+    public void testLoanNotFoundException() {
+        String message = "Préstamo no encontrado";
+        SportLoanException ex = new SportLoanException.LoanNotFoundException(message);
+
+        assertTrue(ex instanceof SportLoanException);
+        assertEquals(message, ex.getMessage());
+    }
+
+    @Test
+    public void testUserNotFoundException() {
+        String message = "Usuario no encontrado";
+        SportLoanException ex = new SportLoanException.UserNotFoundException(message);
+
+        assertTrue(ex instanceof SportLoanException);
+        assertEquals(message, ex.getMessage());
+    }
+
+    @Test
+    public void testLoanAlreadyReturnedException() {
+        String message = "El préstamo ya fue devuelto";
+        SportLoanException ex = new SportLoanException.LoanAlreadyReturnedException(message);
+
+        assertTrue(ex instanceof SportLoanException);
+        assertEquals(message, ex.getMessage());
+    }
+}

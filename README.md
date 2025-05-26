@@ -45,6 +45,10 @@ Una vez que la aplicación ha sido construida y probada correctamente, el siguie
 
 ![imagenes](images/astah.png)
 
+##Diagrama de arquitectura
+
+![imagenes](images/diagramandea.png)
+
 ## App Service creado en azure
 
 ![imagenes](images/2.png)

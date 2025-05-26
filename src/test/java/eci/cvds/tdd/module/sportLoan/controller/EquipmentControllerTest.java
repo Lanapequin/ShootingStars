@@ -1,107 +1,110 @@
-//package eci.cvds.tdd.module.sportLoan.controller;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import eci.cvds.tdd.module.sportLoan.model.DTO.EquipmentStatusUpdateRequest;
-//import eci.cvds.tdd.module.sportLoan.model.Equipment;
-//import eci.cvds.tdd.module.sportLoan.enums.EquipmentStatus;
-//import eci.cvds.tdd.module.sportLoan.service.EquipmentService;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.Mockito;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//import java.util.List;
-//
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-//
-//@WebMvcTest(EquipmentController.class)
-//public class EquipmentControllerTest {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private EquipmentService equipmentService;
-//
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//
-//    @Test
-//    void testAddEquipment() throws Exception {
-//        Equipment equipment = new Equipment();
-//        equipment.setId("eq1");
-//        equipment.setName("Balón");
-//
-//        Mockito.when(equipmentService.addEquipment(any())).thenReturn(equipment);
-//
-//        mockMvc.perform(post("/api/equipment")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(equipment)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value("eq1"));
-//    }
-//
-//    @Test
-//    void testUpdateStatus() throws Exception {
-//        EquipmentStatusUpdateRequest request = new EquipmentStatusUpdateRequest();
-//        request.setEquipmentId("eq2");
-//        request.setNewStatus(EquipmentStatus.DAMAGED);
-//
-//        Equipment updatedEquipment = new Equipment();
-//        updatedEquipment.setId("eq2");
-//        updatedEquipment.setStatus(EquipmentStatus.DAMAGED);
-//
-//        Mockito.when(equipmentService.updateEquipmentStatus(any())).thenReturn(updatedEquipment);
-//
-//        mockMvc.perform(put("/api/equipment/status")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(request)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.status").value("DAMAGED"));
-//    }
-//
-//    @Test
-//    void testGetAvailableEquipment() throws Exception {
-//        Equipment e1 = new Equipment(); e1.setId("e1"); e1.setAvailable(true);
-//        Equipment e2 = new Equipment(); e2.setId("e2"); e2.setAvailable(true);
-//
-//        Mockito.when(equipmentService.getAvailableEquipment()).thenReturn(List.of(e1, e2));
-//
-//        mockMvc.perform(get("/api/equipment/available"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.length()").value(2));
-//    }
-//
-//    @Test
-//    void testDisableEquipment() throws Exception {
-//        mockMvc.perform(put("/api/equipment/disable/eq3"))
-//                .andExpect(status().isOk());
-//
-//        Mockito.verify(equipmentService).disableEquipment("eq3");
-//    }
-//
-//    @Test
-//    void testEnableEquipment() throws Exception {
-//        mockMvc.perform(put("/api/equipment/enable/eq4"))
-//                .andExpect(status().isOk());
-//
-//        Mockito.verify(equipmentService).enableEquipment("eq4");
-//    }
-//
-//    @Test
-//    void testGetEquipmentById() throws Exception {
-//        Equipment equipment = new Equipment();
-//        equipment.setId("eq5");
-//
-//        Mockito.when(equipmentService.getEquipmentById("eq5")).thenReturn(equipment);
-//
-//        mockMvc.perform(get("/api/equipment/eq5"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value("eq5"));
-//    }
-//}
+package eci.cvds.tdd.module.sportLoan.controller;
+
+import eci.cvds.tdd.module.sportLoan.model.DTO.EquipmentStatusUpdateRequest;
+import eci.cvds.tdd.module.sportLoan.model.Equipment;
+import eci.cvds.tdd.module.sportLoan.service.EquipmentService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class EquipmentControllerTest {
+
+    @Mock
+    private EquipmentService equipmentService;
+
+    @InjectMocks
+    private EquipmentController equipmentController;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testAddEquipment() {
+        Equipment equipment = new Equipment();
+        when(equipmentService.addEquipment(equipment)).thenReturn(equipment);
+
+        ResponseEntity<Equipment> response = equipmentController.addEquipment(equipment, "Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(equipment, response.getBody());
+    }
+
+    @Test
+    void testUpdateStatus() {
+        EquipmentStatusUpdateRequest request = new EquipmentStatusUpdateRequest();
+        Equipment equipment = new Equipment();
+        when(equipmentService.updateEquipmentStatus(request)).thenReturn(equipment);
+
+        ResponseEntity<Equipment> response = equipmentController.updateStatus(request, "Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(equipment, response.getBody());
+    }
+
+    @Test
+    void testGetAvailableEquipment() {
+        List<Equipment> available = Arrays.asList(new Equipment(), new Equipment());
+        when(equipmentService.getAvailableEquipment()).thenReturn(available);
+
+        ResponseEntity<List<Equipment>> response = equipmentController.getAvailableEquipment("Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(available, response.getBody());
+    }
+
+    @Test
+    void testDisableEquipment() {
+        String id = "123";
+        doNothing().when(equipmentService).disableEquipment(id);
+
+        ResponseEntity<Void> response = equipmentController.disableEquipment(id, "Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        verify(equipmentService).disableEquipment(id);
+    }
+
+    @Test
+    void testEnableEquipment() {
+        String id = "123";
+        doNothing().when(equipmentService).enableEquipment(id);
+
+        ResponseEntity<Void> response = equipmentController.enableEquipment(id, "Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        verify(equipmentService).enableEquipment(id);
+    }
+
+    @Test
+    void testGetEquipmentById() {
+        String id = "456";
+        Equipment equipment = new Equipment();
+        when(equipmentService.getEquipmentById(id)).thenReturn(equipment);
+
+        ResponseEntity<Equipment> response = equipmentController.getEquipmentById(id, "Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(equipment, response.getBody());
+    }
+
+    @Test
+    void testGetBadAndMaintenance() {
+        List<Equipment> list = Arrays.asList(new Equipment());
+        when(equipmentService.getBadAndMaintenance()).thenReturn(list);
+
+        ResponseEntity<List<Equipment>> response = equipmentController.getEquipmentBadAndMaintenance("Bearer token");
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(list, response.getBody());
+    }
+}

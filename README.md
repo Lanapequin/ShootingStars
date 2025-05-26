@@ -47,7 +47,7 @@ Una vez que la aplicación ha sido construida y probada correctamente, el siguie
 
 ##Diagrama de arquitectura
 
-![imagenes](images/diagramandea.png)
+![imagenes](images/diagramandea.jpg)
 
 ## App Service creado en azure
 

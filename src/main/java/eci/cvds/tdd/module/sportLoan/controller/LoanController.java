@@ -99,7 +99,7 @@ public class LoanController {
      * @return ResponseEntity con la lista de préstamos activos.
      */
     @GetMapping("/ActiveLoans")
-    public ResponseEntity<List<Loan>> listLoansByDateRange(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<Loan>> listActiveLoans(@RequestHeader("Authorization") String token) {
         return new ResponseEntity<>(loanService.getActiveLoans(), HttpStatus.OK);
     }
 

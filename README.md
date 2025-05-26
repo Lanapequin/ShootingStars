@@ -57,6 +57,10 @@ Una vez que la aplicación ha sido construida y probada correctamente, el siguie
 
 ![imagenes](images/3.jpeg)
 
+## Covertura de los testeos 
+
+![imagenes](images/jacocoxd.png)
+
 ## **Utilidad para Validación de JWT en Spring Security**
 
 La clase `JwtUtil` es un componente de seguridad en Spring Boot que se encarga de validar los **JSON Web Tokens (JWT)** utilizados para la autenticación de usuarios.
